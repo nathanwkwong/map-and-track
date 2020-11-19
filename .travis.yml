@@ -9,8 +9,6 @@ services:
 #   - docker run nathanwkwong/vue-test npm test -- --coverage
 
 script:
-  on: 
-    branch: master
   - docker build -t nathanwkwong/map-and-track-client ./client
   - docker build -t nathanwkwong/map-and-track-nginx ./nginx
   - docker build -t nathanwkwong/map-and-track-server ./server
