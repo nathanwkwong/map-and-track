@@ -14,7 +14,7 @@
             v-model="roomId"
             placeholder="room id to join"
         />
-        <Button class="btn-join" @click="joinRoom">join</Button>
+        <Button class="btn-join" @click="joinRoom">joinaaaa</Button>
         <div>
             <div class="created-room-list">
                 Created Room List
