@@ -1,0 +1,31 @@
+version: "3"
+services:
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - "3050:80"
+    # env_file:
+    #   - ./client/*.env
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes:
+      - /app/server/node_modules
+      - ./server:/app/server
+    # env_file:
+    #   - ./server/*.env
+      
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/client/node_modules #bookmarking, prevent override
+      - ./client:/app/client #/app reference to ./server

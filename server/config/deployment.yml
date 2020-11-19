@@ -1,0 +1,6 @@
+db:
+    username: 'nathandriver'
+    password: 'nathandriver'
+    synchronize: true
+jwt:
+    secret: 'map-and-track'

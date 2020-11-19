@@ -1,0 +1,10 @@
+server:
+    port: 80
+  
+db:
+  type: 'mongodb'
+  database: 'map-and-track'
+
+jwt:
+  secret: 'map-and-track'
+  # expiresIn: 3600

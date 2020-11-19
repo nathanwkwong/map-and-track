@@ -1,0 +1,31 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t nathanwkwong/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run nathanwkwong/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t nathanwkwong/map-and-track-client ./client
+  - docker build -t nathanwkwong/map-and-track-nginx ./nginx
+  - docker build -t nathanwkwong/map-and-track-server ./server
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push nathanwkwong/map-and-track-client
+  - docker push nathanwkwong/map-and-track-nginx
+  - docker push nathanwkwong/map-and-track-server
+
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: ap-northeast-2
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-ap-northeast-2-403354037318
+  bucket_path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
