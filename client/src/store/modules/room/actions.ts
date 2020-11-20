@@ -28,9 +28,11 @@ const actions: ActionTree<RoomState, IRootState> = {
     setCoordinates: ({ rootState, commit }: RoomContext, payload) => {
         commit(types.SET_COORDINATES, payload)
     },
-    goToXY({ state, commit, dispatch }: RoomContext, dXY: number[]) {
+    goToXY({ rootState, state, commit, dispatch }: RoomContext, dXY: number[]) {
         const payload = [state.coordinates[0] + dXY[0], state.coordinates[1] - dXY[1]];
-        dispatch('addMapTrace', payload);
+        if(rootState.account.isTraceOthersModeOn){
+            dispatch('addMapTrace', payload);
+        }
         commit(types.SET_COORDINATES, payload);
     },
     goToSpot({ state, commit }: RoomContext, payload) {
