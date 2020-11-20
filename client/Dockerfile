@@ -8,4 +8,4 @@ CMD ["yarn", "build"]
 FROM nginx
 EXPOSE 3050
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=0 /app/client/build /usr/share/nginx/html
+COPY --from=0 /app/client/dist /usr/share/nginx/html
