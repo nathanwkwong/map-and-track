@@ -1,4 +1,5 @@
 version: "3"
+
 services:
   nginx:
     depends_on:
@@ -12,6 +13,7 @@ services:
       - "3050:80"
     # env_file:
     #   - ./client/*.env
+    
   api:
     build:
       dockerfile: Dockerfile.dev

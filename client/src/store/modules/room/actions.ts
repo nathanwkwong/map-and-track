@@ -54,7 +54,8 @@ const actions: ActionTree<RoomState, IRootState> = {
                 userId,
                 selfMapTraceId: null
             },
-            reconnection: true
+            reconnection: true,
+            transports: ['polling','websocket']
         };
 
         const res = await API.room.renewSelfMapTraceId(userId);
