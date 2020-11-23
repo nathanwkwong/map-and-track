@@ -29,5 +29,13 @@
             ],
             "links": ["client", "server"]
         }
-    ]
+    ],
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+            "awslogs-group": "awslogs-test",
+            "awslogs-region": "ap-northeast-2",
+            "awslogs-stream-prefix": "server"
+        }
+    },
 }
