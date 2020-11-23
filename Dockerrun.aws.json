@@ -13,7 +13,7 @@
             "image": "nathanwkwong/map-and-track-server",
             "hostname": "api",
             "essential": false,
-            "memory": 128
+            "memory": 256
         },
         {
             "name": "nginx",
@@ -27,7 +27,10 @@
                     "containerPort": 80
                 }
             ],
-            "links": ["client", "server"]
+            "links": [
+                "client",
+                "server"
+            ]
         }
     ],
     "logConfiguration": {

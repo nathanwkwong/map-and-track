@@ -3,7 +3,9 @@ import axios from 'axios';
 
 export const REQUEST_OPTIONS = {
     timeout: 15000,
-    baseURL: 'http://localhost:3050/',
+    // baseURL: 'http://localhost:3050/',
+    // baseURL: process.env.BASE_URL || 'http://localhost:3050/',
+    baseURL: '/',
     withCredentials: false,
     headers: {
         'Content-Type': 'application/json',
