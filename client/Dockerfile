@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM node:10.23-alpine3.12
 WORKDIR "/app/client"
 COPY ./package.json ./
 RUN yarn

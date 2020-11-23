@@ -6,24 +6,14 @@
             "image": "nathanwkwong/map-and-track-client",
             "hostname": "client",
             "essential": false,
-            "memory": 128,
-            "command": [
-                "tail",
-                "-f",
-                "/bin/bash"
-            ]
+            "memory": 128
         },
         {
             "name": "server",
             "image": "nathanwkwong/map-and-track-server",
             "hostname": "api",
             "essential": false,
-            "memory": 128,
-            "command": [
-                "tail",
-                "-f",
-                "/bin/bash"
-            ]
+            "memory": 128
         },
         {
             "name": "nginx",
@@ -40,11 +30,6 @@
             "links": [
                 "client",
                 "server"
-            ],
-            "command": [
-                "tail",
-                "-f",
-                "/bin/bash"
             ]
         }
     ]
