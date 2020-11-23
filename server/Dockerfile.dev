@@ -3,4 +3,5 @@ WORKDIR "/app/server"
 COPY ./package.json ./
 RUN npm install
 COPY . .
+EXPOSE 3080
 CMD ["npm", "run", "start:dev"]
