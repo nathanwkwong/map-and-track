@@ -13,7 +13,7 @@
             "image": "nathanwkwong/map-and-track-server",
             "hostname": "api",
             "essential": false,
-            "memory": 256,
+            "memory": 128,
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
