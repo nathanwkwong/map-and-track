@@ -21,7 +21,7 @@ services:
     volumes:
       - /app/server/node_modules
       - ./server:/app/server
-      - "${EB_LOG_BASE_DIR}/api:/var/log/api"
+      # - "${EB_LOG_BASE_DIR}/api:/var/log/api"
     # env_file:
     #   - ./server/*.env
       

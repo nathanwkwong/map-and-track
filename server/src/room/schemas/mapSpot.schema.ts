@@ -15,7 +15,7 @@ export class MapSpot {
     @Prop({ type: mSchema.Types.ObjectId, ref: 'User' })
     user: string;
 
-    @Prop()
+    @Prop({ type: Object })
     geoLoc: GeoLoc;
 
     @Prop({ type: Date })

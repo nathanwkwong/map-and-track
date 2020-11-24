@@ -141,9 +141,11 @@ export default Vue.extend({
                 maxWidth: 200,
             });
 
+
             this.selfMarker.addListener("click", () => {
                 if (this.selfInfoWindow) this.selfInfoWindow.close();
-                this.selfInfoWindow.open(this.map, this.selfMarker);
+                // @ts-ignore
+                this.selfInfoWindow?.open(this.map, this.selfMarker);
                 // this.selfInfoWindow = this.selfInfoWindow;
             });
         },
