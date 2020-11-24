@@ -21,7 +21,13 @@
                     "awslogs-region": "ap-northeast-2",
                     "awslogs-stream-prefix": "awslogs-map-and-track"
                 }
-            }
+            },
+            "mountPoints": [
+                {
+                  "sourceVolume": "awseb-logs-server",
+                  "containerPath": "/var/log/server"
+                }
+              ]
         },
         {
             "name": "nginx",
