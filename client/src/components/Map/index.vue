@@ -24,6 +24,7 @@ export default Vue.extend({
         return {
             watchPositionId: -1,
             selfMarker: null as null | google.maps.Marker,
+            selfInfoWindow: null as null | google.maps.InfoWindow,
             markers: Array() as google.maps.Marker[],
             infoWindows: Array(),
         };
@@ -130,6 +131,21 @@ export default Vue.extend({
                 },
                 map: this.map,
             });
+
+            this.selfInfoWindow = new google.maps.InfoWindow({
+                content: `
+          <div id="content">
+            <p id="firstHeading" class="firstHeading">goole people</p>
+          </div>
+        `,
+                maxWidth: 200,
+            });
+
+            this.selfMarker.addListener("click", () => {
+                if (this.selfInfoWindow) this.selfInfoWindow.close();
+                this.selfInfoWindow.open(this.map, this.selfMarker);
+                // this.selfInfoWindow = this.selfInfoWindow;
+            });
         },
         initOthersMapTraces() {
             const mapTracesExtend: MapTrace[] = this.mapTraces;
@@ -187,7 +203,7 @@ export default Vue.extend({
                         console.log(error.message);
                     }
                 );
-            }else{
+            } else {
                 this.addMapTrace(this.coordinates);
             }
         },
