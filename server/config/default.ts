@@ -1,7 +1,7 @@
 import { registerAs } from '@nestjs/config';
 
 export default registerAs('app', () => ({
-    port: process.env.PORT || 80,
+    port: process.env.PORT || 3080,
     db: {
       type: 'mongodb',
       name: process.env.DB_NAME,
