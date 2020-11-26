@@ -10,7 +10,8 @@ export default {
         return REST.API({
             url: '/api/room/createRoom',
             method: 'POST',
-            data: payload
+            data: payload,
+            authorization: `Bearer ${window.localStorage.getItem(KEY.ACCESS_TOKEN)}`
         })        
     },
     joinRoom(payload: JoinRoomReq) {
