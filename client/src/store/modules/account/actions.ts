@@ -20,10 +20,10 @@ const actions: ActionTree<AccountState, IRootState> = {
                 const credential = { isLogin: true, userId: userInfo.userId }
                 setItemSync(KEY.CREDENTIAL, credential, true)
                 setItemSync(KEY.ACCESS_TOKEN, accessToken, false);
+                commit(types.LOGIN, { ...userInfo, accessToken })
                 if (router.currentRoute.path !== "/lobby") {
                     router.push("/lobby")
                 }
-                commit(types.LOGIN, { ...userInfo, accessToken })
             } else if (router.currentRoute.path !== "/") {
                 router.push("/")
             }

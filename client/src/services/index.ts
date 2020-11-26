@@ -27,6 +27,7 @@ class BaseAPI {
         const handleTokenExpired = async (error: any) => {
             //...
         }
+        console.log(30, window.localStorage.getItem(KEY.ACCESS_TOKEN));
         return axios.create(defaultConfig)(requestConfig).catch(handleTokenExpired)
     }
 }
