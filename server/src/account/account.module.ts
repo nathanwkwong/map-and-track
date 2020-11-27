@@ -1,24 +1,21 @@
-import { Module } from '@nestjs/common';
-import { AuthController } from './account.controller';
-import { AccountService } from './account.service';
 import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
-import { JwtStrategy } from 'src/auth/jwt.strategy';
-import config from 'config';
-import { WsJwtStrategy } from '../auth/wsJwt.Strategy';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { PassportModule } from '@nestjs/passport';
+import { WsJwtStrategy } from 'src/auth/wsJwt.Strategy';
+import { JwtStrategy } from 'src/auth/jwt.strategy';
 import { User, UserSchema } from 'src/account/schemas/user.schema';
 import { Room, RoomSchema } from 'src/room/schemas/room.schema';
-
-const jwtConfig: any = config.get('jwt');
+import { AuthController } from './account.controller';
+import { AccountService } from './account.service';
 
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: process.env.JWT_SECRET || jwtConfig.secret,
+      secret: process.env.JWT_SECRET,
       signOptions: {
-        expiresIn: jwtConfig.expiresIn || 999999999,
+        expiresIn: 999999999,
       },
     }),
     MongooseModule.forFeature([

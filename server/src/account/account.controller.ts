@@ -1,10 +1,9 @@
+import { AuthGuard } from '@nestjs/passport';
 import { Controller, Post, Body, ValidationPipe, Param, Get, Logger, UseGuards } from '@nestjs/common';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { User } from 'src/account/schemas/user.schema';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { AccountService } from './account.service';
-import { GetUser } from '../auth/get-user.decorator';
-import { User } from 'src/account/schemas/user.schema';
-import { AuthGuard } from '@nestjs/passport';
-import { SelfMapTraceIdUpdateDto } from './dto/trace-mode-update.dto';
 
 @Controller('/account')
 export class AuthController {

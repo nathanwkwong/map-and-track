@@ -1,9 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as mSchema } from 'mongoose';
-import { User } from 'src/account/schemas/user.schema';
 import { MapSpot, MapSpotSchema } from './mapSpot.schema';
 import { MapTrace, MapTraceSchema } from './mapTrace.schema';
-import mongoose from 'mongoose'
 
 export interface MapTraces {
     [userId: string]: MapTrace[];

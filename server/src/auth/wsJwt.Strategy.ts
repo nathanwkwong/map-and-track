@@ -2,7 +2,6 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtPayload } from 'src/auth/jwt-payload.interface';
-import config from 'config';
 import { User, UserDocument } from 'src/account/schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -14,7 +13,7 @@ export class WsJwtStrategy extends PassportStrategy(Strategy, 'wsJwtStrategy') {
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromUrlQueryParameter('token'),
-      secretOrKey: process.env.JWT_SECRET || config.get('jwt.secret'),
+      secretOrKey: process.env.JWT_SECRET,
     });
   }
 

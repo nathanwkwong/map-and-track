@@ -4,7 +4,6 @@ export const GetUser = createParamDecorator((data: unknown, context: ExecutionCo
   const request = context.switchToHttp().getRequest();
   const { user } = request;
   if (!user) {
-    
     throw new UnauthorizedException('Invalid credentials');
   }
 

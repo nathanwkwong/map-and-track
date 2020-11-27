@@ -3,7 +3,6 @@ import { AuthGuard } from "@nestjs/passport";
 import { WsException } from "@nestjs/websockets";
 import { ExtractJwt } from "passport-jwt";
 import { Socket } from 'socket.io';
-import config from 'config';
 import { AccountService } from "src/account/account.service";
 import { JwtStrategy } from "src/auth/jwt.strategy";
 import { User } from "src/account/schemas/user.schema";
@@ -17,29 +16,12 @@ export class WsJwtGuard extends AuthGuard('wsJwtStrategy') {
     constructor() {
         super({
             jwtFromRequest: ExtractJwt.fromUrlQueryParameter('token'),
-            secretOrKey: process.env.JWT_SECRET || config.get('jwt.secret'),
+            secretOrKey: process.env.JWT_SECRET,
         });
-
     }
 
     // override getRequest for websocket
     getRequest<T = any>(context: ExecutionContext): T {
         return context.switchToWs().getClient().handshake;
     }
-
-    // implements CanActivate class
-    // async canActivate(context: ExecutionContext): Promise<boolean> {
-
-    //     try {
-    //         const socket: Socket = context.switchToWs().getClient<Socket>();
-    //         const authToken: string = socket.handshake.query.token;
-    //         console.log(35, 'wsJWT', authToken)
-
-    //         // const user: User = await this.jwtStrategy.validateTest(authToken);
-    //         // return Boolean(user)
-    //         return false
-    //     } catch (error) {
-    //         throw new WsException(error.message)
-    //     }
-    // }
 }

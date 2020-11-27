@@ -1,7 +1,5 @@
 import { ExecutionContext, Logger, UseGuards } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
 import {
-    ConnectedSocket,
     MessageBody,
     OnGatewayConnection,
     OnGatewayDisconnect,
@@ -9,7 +7,6 @@ import {
     SubscribeMessage,
     WebSocketGateway,
     WebSocketServer,
-    WsResponse
 } from "@nestjs/websockets";
 
 import { Socket, Server } from "socket.io";

@@ -1,15 +1,13 @@
 import { Injectable, UnauthorizedException, Logger, ConflictException, InternalServerErrorException, UseGuards } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt'
 import { v4 as uuid } from 'uuid';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { JwtPayload } from 'src/auth/jwt-payload.interface';
 import mongoose from 'mongoose'
-import { AuthGuard } from '@nestjs/passport';
-import { SelfMapTraceIdUpdateDto } from './dto/trace-mode-update.dto';
 import { User, UserDocument } from './schemas/user.schema';
 import { Model } from 'mongoose';
-import { InjectConnection, InjectModel, MongooseModule } from '@nestjs/mongoose';
 
 @Injectable()
 export class AccountService {
@@ -17,7 +15,8 @@ export class AccountService {
 
   constructor(
     @InjectModel('User') private readonly userModel: Model<UserDocument>,
-    @InjectConnection() private connection: mongoose.Connection, //to access the native Mongoose Connection object
+    //for access the native Mongoose Connection object
+    @InjectConnection() private connection: mongoose.Connection, 
     private jwtService: JwtService,
   ) { }
 

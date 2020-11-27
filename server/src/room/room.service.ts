@@ -1,15 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import { Connection, Model } from 'mongoose';
 import { v4 as uuid } from 'uuid';
-import { AddSpotDto } from './dto/addSpot.input.dto';
 import { CreateRoomDto } from './dto/createRoom.input.dto';
 import { JoinRoomDto } from './dto/joinRoom.input.dto';
 import { AccountService } from 'src/account/account.service';
-import { InjectConnection, InjectModel } from '@nestjs/mongoose';
-import { Connection, Model } from 'mongoose';
 import { Room, RoomDocument } from 'src/room/schemas/room.schema';
 import { User, UserDocument } from 'src/account/schemas/user.schema';
-import { MapSpot } from './schemas/mapSpot.schema';
-import { MapTrace } from './schemas/mapTrace.schema';
 import mongoose from 'mongoose'
 
 @Injectable()

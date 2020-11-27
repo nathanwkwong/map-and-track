@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ObjectID } from 'mongodb';
 import { Document, Schema as mSchema } from 'mongoose';
 import { MapSpot, MapSpotSchema } from './mapSpot.schema';
 

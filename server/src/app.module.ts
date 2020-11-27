@@ -1,24 +1,24 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AccountModule } from './account/account.module';
 import { RoomModule } from './room/room.module';
-import { MongooseModule } from '@nestjs/mongoose';
-import { mongooseConfig } from './config/mongoose.config';
-import { NestFactory } from '@nestjs/core';
-
+import config from '../config/default';
 @Module({
   imports: [
-    MongooseModule.forRoot(mongooseConfig.uri), 
-    // MongooseModule.forRootAsync({
-      // imports: [ConfigModule],
-      // inject: [ConfigService],
-      // useFactory: async (configService: ConfigService) => {
-        // console.log('hiiiiiiiiiiii');
-        // uri: `mongodb+srv://${configService["user"]}:${configService["password"]}@${configService["clusterName"]}.xpaqi.mongodb.net/${configService["name"]}?retryWrites=true&w=majority`
-        // uri: `mongodb+srv://nathandriver:nathandriver@cluster0.xpaqi.mongodb.net/map-and-track?retryWrites=true&w=majority`
-      // }
-    // }), 
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      load: [config]
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        const { user, password, clusterName, dbName } = configService.get<any>('db');
+        return ({
+          uri: `mongodb+srv://${user}:${password}@${clusterName}.xpaqi.mongodb.net/${dbName}?retryWrites=true&w=majority`
+        })
+      }
+    }),
     RoomModule,
     AccountModule,
   ],
