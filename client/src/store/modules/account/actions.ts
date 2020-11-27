@@ -24,8 +24,6 @@ const actions: ActionTree<AccountState, IRootState> = {
                 if (router.currentRoute.path !== "/lobby") {
                     router.push("/lobby")
                 }
-            } else if (router.currentRoute.path !== "/") {
-                router.push("/")
             }
         } catch (err) {
             console.log('failed to login', err)

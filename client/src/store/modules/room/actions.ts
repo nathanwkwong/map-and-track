@@ -17,6 +17,7 @@ const actions: ActionTree<RoomState, IRootState> = {
         commit(types.INIT_ROOM);
     },
     createRoom: async ({ rootState, commit, dispatch }: RoomContext, payload) => {
+        console.log(20, window.localStorage.getItem(KEY.ACCESS_TOKEN));
         const res = await API.room.createRoom(payload);
         if (res && res.data.success) {
             dispatch(`account/getCreatedRooms`, null, { root: true })
