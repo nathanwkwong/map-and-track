@@ -9,8 +9,7 @@ export const REQUEST_OPTIONS = {
     withCredentials: false,
     headers: {
         'Content-Type': 'application/json',
-        'Accept' : 'application/json',
-        'Authorization': `Bearer ${window.localStorage.getItem(KEY.ACCESS_TOKEN)}`,
+        'Accept': 'application/json',
         // 'Access-Control-Allow-Origin': "*",
         // 'Access-Control-Allow-Credentials': true,
     }
@@ -18,17 +17,22 @@ export const REQUEST_OPTIONS = {
 
 class BaseAPI {
 
-    constructor() {
-    }
+    constructor() { }
 
     public API = (requestConfig: any) => {
-
         const defaultConfig = REQUEST_OPTIONS;
         const handleTokenExpired = async (error: any) => {
             //...
         }
-        console.log(30, window.localStorage.getItem(KEY.ACCESS_TOKEN));
-        return axios.create(defaultConfig)(requestConfig).catch(handleTokenExpired)
+        const instance = axios.create(defaultConfig);
+
+        instance.interceptors.request.use(function (config) {
+            config.headers.Authorization =  `Bearer ${window.localStorage.getItem(KEY.ACCESS_TOKEN)}`;
+        
+            return config;
+        });
+
+        return instance(requestConfig).catch(handleTokenExpired)
     }
 }
 
