@@ -70,7 +70,7 @@ const actions: ActionTree<RoomState, IRootState> = {
             socketOptions.query.selfMapTraceId = selfMapTraceId;
         }
 
-        const socket: SocketIOClient.Socket = io(`http://localhost:3050`, socketOptions);
+        const socket: SocketIOClient.Socket = io('/', socketOptions);
 
         socket.on("connect", (res: WsRes) => {
             console.log("socket connected to BN");
