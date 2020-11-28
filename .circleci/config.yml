@@ -26,9 +26,9 @@ jobs:
       - run:
           name: Archive Docker image
           command: |
-            ocker save -o image-client.tar $IMAGE_CLIENT
-            ocker save -o image-nginx.tar $IMAGE_NGINX
-            ocker save -o image-server.tar $IMAGE_SERVER
+            docker save -o image-client.tar $IMAGE_CLIENT
+            docker save -o image-nginx.tar $IMAGE_NGINX
+            docker save -o image-server.tar $IMAGE_SERVER
       - persist_to_workspace: # persist a temporary file to be used by another job in the workflow
           root: ~/map-and-track
           paths:
