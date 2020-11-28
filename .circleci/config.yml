@@ -25,9 +25,10 @@ jobs:
           command: docker build ./server -t $IMAGE_SERVER:latest
       - run:
           name: Archive Docker image
-          command: docker save -o image-client.tar $IMAGE_CLIENT
-          command: docker save -o image-nginx.tar $IMAGE_NGINX
-          command: docker save -o image-server.tar $IMAGE_SERVER
+          command: |
+            ocker save -o image-client.tar $IMAGE_CLIENT
+            ocker save -o image-nginx.tar $IMAGE_NGINX
+            ocker save -o image-server.tar $IMAGE_SERVER
       - persist_to_workspace: # persist a temporary file to be used by another job in the workflow
           root: ~/map-and-track
           paths:
@@ -42,9 +43,10 @@ jobs:
       - setup_remote_docker
       - run:
           name: Load archived Docker image
-          command: docker load -i image-client.tar
-          command: docker load -i image-nginx.tar
-          command: docker load -i image-server.tar
+          command: |
+            docker load -i image-client.tar
+            docker load -i image-nginx.tar
+            docker load -i image-server.tar
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
