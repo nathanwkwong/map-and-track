@@ -3,14 +3,13 @@ executors: #declare things that will reuse in all jobs with referencing
     docker-publisher:
       working_directory: ~/map-and-track # directory where steps will run
       environment:
-        IMAGE_NAME: nathanwkwong/client #declares a local env variable
+        IMAGE_NAME: nathanwkwong/map-and-track-client #declares a local env variable
       docker:
         - image: circleci/buildpack-deps:stretch #to support executing docker commands
 jobs:
   #build: 
   #  executor: docker-publisher
   build-docker:
-    working_directory:  ~/map-and-track
     executor: docker-publisher #reference the executor and env variable()IMAGE_NAME
     steps:
       - checkout
