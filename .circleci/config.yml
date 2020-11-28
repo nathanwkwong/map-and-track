@@ -16,13 +16,13 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build latest client Docker image
-          command: docker build ./client -t $IMAGE_CLIENT:latest
+          command: docker build -t $IMAGE_CLIENT ./client 
       - run:
           name: Build latest nginx image
-          command: docker build ./nginx -t $IMAGE_NGINX:latest
+          command: docker build -t $IMAGE_NGINX ./nginx 
       - run:
           name: Build latest server  image
-          command: docker build ./server -t $IMAGE_SERVER:latest
+          command: docker build -t $IMAGE_SERVER ./server 
       - run:
           name: Archive Docker image
           command: |
@@ -51,9 +51,9 @@ jobs:
           name: Publish Docker Image to Docker Hub
           command: |
             echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
-            docker push $IMAGE_CLIENT:latest
-            docker push $IMAGE_NGINX:latest
-            docker push $IMAGE_SERVER:latest
+            docker push $IMAGE_CLIENT
+            docker push $IMAGE_NGINX
+            docker push $IMAGE_SERVER
 workflows:
   build_and_deploy:
     jobs:
