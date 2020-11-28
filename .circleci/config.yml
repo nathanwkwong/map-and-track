@@ -10,6 +10,7 @@ jobs:
   #build: 
   #  executor: docker-publisher
   build-docker:
+    working_directory:  ~/cci-map-and-track
     executor: docker-publisher #reference the executor and env variable()IMAGE_NAME
     steps:
       - checkout
