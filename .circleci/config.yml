@@ -1,7 +1,7 @@
 version: 2.1
 executors: #declare things that will reuse in all jobs with referencing
     docker-publisher:
-      working_directory: ~/cci-map-and-track # directory where steps will run
+      working_directory: ~/map-and-track # directory where steps will run
       environment:
         IMAGE_NAME: nathanwkwong/client #declares a local env variable
       docker:
@@ -10,7 +10,7 @@ jobs:
   #build: 
   #  executor: docker-publisher
   build-docker:
-    working_directory:  ~/cci-map-and-track
+    working_directory:  ~/map-and-track
     executor: docker-publisher #reference the executor and env variable()IMAGE_NAME
     steps:
       - checkout
@@ -24,7 +24,7 @@ jobs:
           name: Archive Docker image
           command: docker save -o image.tar $IMAGE_NAME
       - persist_to_workspace:
-          root: ~/cci-map-and-track
+          root: ~/map-and-track
           paths:
             - ./image.tar
   publish-docker:
