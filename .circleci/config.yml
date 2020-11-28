@@ -3,25 +3,37 @@ executors: #declare things that will reuse in all jobs by referencing
     docker-publisher:
       working_directory: ~/map-and-track # directory where steps will run
       environment:
-        IMAGE_NAME: nathanwkwong/map-and-track-client #declares a local env variable
+        IMAGE_CLIENT: nathanwkwong/map-and-track-client #declares a local env variable
+        IMAGE_NGINX: nathanwkwong/map-and-track-nginx
+        IMAGE_SERVER: nathanwkwong/map-and-track-server
       docker:
         - image: circleci/buildpack-deps:stretch #to support executing docker commands
 jobs:
   build-docker:
-    executor: docker-publisher #reference the executor and env variable()IMAGE_NAME
+    executor: docker-publisher #reference the executor and env variables
     steps:
       - checkout #check out the source code to the configured path(default: working_directory)
       - setup_remote_docker
       - run:
-          name: Build latest Docker image
-          command: docker build ./client -t $IMAGE_NAME:latest
+          name: Build latest client Docker image
+          command: docker build ./client -t $IMAGE_CLIENT:latest
+      - run:
+          name: Build latest nginx image
+          command: docker build ./nginx -t $IMAGE_NGINX:latest
+      - run:
+          name: Build latest server  image
+          command: docker build ./server -t $IMAGE_SERVER:latest
       - run:
           name: Archive Docker image
-          command: docker save -o image.tar $IMAGE_NAME
+          command: docker save -o image-client.tar $IMAGE_CLIENT
+          command: docker save -o image-nginx.tar $IMAGE_NGINX
+          command: docker save -o image-server.tar $IMAGE_SERVER
       - persist_to_workspace: # persist a temporary file to be used by another job in the workflow
           root: ~/map-and-track
           paths:
-            - ./image.tar
+            - image-client.tar
+            - image-nginx.tar 
+            - image-server.tar
   publish-docker:
     executor: docker-publisher
     steps:
@@ -30,12 +42,16 @@ jobs:
       - setup_remote_docker
       - run:
           name: Load archived Docker image
-          command: docker load -i image.tar
+          command: docker load -i image-client.tar
+          command: docker load -i image-nginx.tar
+          command: docker load -i image-server.tar
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
             echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
-            docker push $IMAGE_NAME:latest
+            docker push $IMAGE_CLIENT:latest
+            docker push $IMAGE_NGINX:latest
+            docker push $IMAGE_SERVER:latest
 workflows:
   build_and_deploy:
     jobs:
