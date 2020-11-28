@@ -13,8 +13,6 @@ jobs:
     executor: docker-publisher #reference the executor and env variable()IMAGE_NAME
     steps:
       - checkout
-      - attach_workspace:
-          at: .
       - setup_remote_docker
       - run:
           name: Build latest Docker image
@@ -29,8 +27,6 @@ jobs:
   publish-docker:
     executor: docker-publisher
     steps:
-      - attach_workspace:
-          at: .
       - setup_remote_docker
       - run:
           name: Load archived Docker image
