@@ -17,15 +17,15 @@ script:
   - docker push nathanwkwong/map-and-track-nginx
   - docker push nathanwkwong/map-and-track-server
 
-deploy:
-  edge: true
-  provider: elasticbeanstalk
-  region: ap-northeast-2
-  app: Map-And-Track
-  env: MapAndTrack-env
-  bucket_name: elasticbeanstalk-ap-northeast-2-403354037318
-  bucket_path: docker-map-and-track
-  on: 
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+# deploy:
+#   edge: true
+#   provider: elasticbeanstalk
+#   region: ap-northeast-2
+#   app: Map-And-Track
+#   env: MapAndTrack-env
+#   bucket_name: elasticbeanstalk-ap-northeast-2-403354037318
+#   bucket_path: docker-map-and-track
+#   on: 
+#     branch: master
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key: $AWS_SECRET_KEY

@@ -1,0 +1,7 @@
+{
+    "cluster": "my-cluster",
+    "serviceName": "my-service",
+    "taskDefinition": "sinatra-hi",
+    "desiredCount": 1,
+    "role": "ecsServiceRole"
+}

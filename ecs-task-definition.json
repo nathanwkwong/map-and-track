@@ -1,5 +1,5 @@
 {
-    "AWSEBDockerrunVersion": 2,
+    "family": "map-and-track-ecs-manual",
     "containerDefinitions": [
         {
             "name": "client",
