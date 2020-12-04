@@ -1,4 +1,4 @@
-FROM node:12.18.4-alpine
+FROM node:10-alpine
 WORKDIR "/app/server"
 COPY ./package.json ./
 RUN npm install
