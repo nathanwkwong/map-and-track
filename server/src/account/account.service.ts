@@ -40,12 +40,13 @@ export class AccountService {
 
   async login(authCredentialsDto: AuthCredentialsDto): Promise<{}> {
     const { userId, username } = await this.validateUserPassword(authCredentialsDto);
+    
     if (!username) {
       throw new UnauthorizedException('Invalid credentials');
     }
-
     const payload: JwtPayload = { username };
-    const accessToken = this.jwtService.sign(payload);
+    const options ={secret: process.env.JWT_SECRET}
+    const accessToken = this.jwtService.sign(payload, options);
     this.logger.debug(`Generated JWT Token with payload ${JSON.stringify(payload)}`);
 
     await this.renewSelfMapTraceId(userId);
