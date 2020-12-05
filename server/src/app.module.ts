@@ -14,6 +14,7 @@ import config from '../config/default';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
         const { user, password, clusterName, dbName } = configService.get<any>('db');
+        console.log('mongodb+srv://nathandriver:nathandriver@cluster0.xpaqi.mongodb.net/map-and-track?retryWrites=true&w=majority');
         return ({
           uri: `mongodb+srv://nathandriver:nathandriver@cluster0.xpaqi.mongodb.net/map-and-track?retryWrites=true&w=majority`
           // uri: `mongodb+srv://${user}:${password}@${clusterName}.xpaqi.mongodb.net/${dbName}?retryWrites=true&w=majority`
