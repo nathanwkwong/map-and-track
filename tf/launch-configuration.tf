@@ -14,9 +14,9 @@ resource "aws_launch_configuration" "ecs-launch-configuration" {
     create_before_destroy = true
   }
 
-  security_groups             = ["${aws_security_group.film_ratings_public_sg.id}"]
+  security_groups             = ["${aws_security_group.map_and_track_public_sg.id}"]
   associate_public_ip_address = "true"
-  key_name                    = "${var.ecs_key_pair_name}"
+  # key_name                    = "${var.ecs_key_pair_name}"
   user_data                   = <<EOF
                                   #!/bin/bash
                                   echo ECS_CLUSTER=${var.ecs_cluster} >> /etc/ecs/ecs.config

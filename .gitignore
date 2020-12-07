@@ -25,3 +25,8 @@ pnpm-debug.log*
 *.sw?
 server/package-lock.json
 package-lock.json
+
+
+.terraform
+*.tfstate
+*.tfstate.backup
