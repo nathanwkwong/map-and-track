@@ -1,15 +1,24 @@
 <template>
-    <div class="map-wrapper">
-        <section class="google-map" id="google-map" ref="google-map"></section>
-    </div>
+<div class="map-wrapper">
+    <section class="google-map" id="google-map" ref="google-map"></section>
+</div>
 </template>
 
 <script lang=ts>
 import Vue from "vue";
 import {} from "googlemaps";
-import { createNamespacedHelpers, mapActions } from "vuex";
-import { SelfMapTrace, MapSpot, MapTrace } from "../../types/room";
-import { KEY } from "../../store/storage";
+import {
+    createNamespacedHelpers,
+    mapActions
+} from "vuex";
+import {
+    SelfMapTrace,
+    MapSpot,
+    MapTrace
+} from "../../types/room";
+import {
+    KEY
+} from "../../store/storage";
 
 const accountNameSapceMappers = createNamespacedHelpers("account");
 const mapGettersAccount = accountNameSapceMappers.mapGetters;
@@ -17,7 +26,16 @@ const mapGettersAccount = accountNameSapceMappers.mapGetters;
 const roomNameSapceMappers = createNamespacedHelpers("room");
 const mapGettersRoom = roomNameSapceMappers.mapGetters;
 const mapActionsRoom = roomNameSapceMappers.mapActions;
-
+// require("@/assets/leftMenu/add.svg")
+const mapSpotIcon = {    
+    url: '/img/mapSpot/flag.svg',
+    // This marker is 20 pixels wide by 32 pixels high.
+    size: new google.maps.Size(150, 100),
+    // The origin for this image is (0, 0).
+    // origin: new google.maps.Point(0, 0),
+    // The anchor for this image is the base of the flagpole at (0, 32).
+    // anchor: new google.maps.Point(0, 32),
+  };
 export default Vue.extend({
     name: "google-map",
     data() {
@@ -26,6 +44,7 @@ export default Vue.extend({
             selfMarker: null as null | google.maps.Marker,
             selfInfoWindow: null as null | google.maps.InfoWindow,
             markers: Array() as google.maps.Marker[],
+            mapSpotMarkers: Array() as google.maps.Marker[],
             infoWindows: Array(),
         };
     },
@@ -45,6 +64,7 @@ export default Vue.extend({
             mapSpots: "mapSpots",
             coordinates: "coordinates",
             lastUpdatedMapTraceId: "lastUpdatedMapTraceId",
+            isShowMapSpot: "isShowMapSpot",
         }),
     },
     mounted() {
@@ -53,6 +73,13 @@ export default Vue.extend({
     },
     beforeUpdate() {},
     watch: {
+        isShowMapSpot(isShowMapSpot) {
+            if (isShowMapSpot) {
+                this.renderMapSpotMarkers();
+            }else{
+                this.removeMapSpotMarkers();
+            }
+        },
         isTraceSelfModeOn(isTraceSelfModeOn) {
             if (this.isTraceSelfModeOn) {
                 this.startSelfLocationUpdates();
@@ -68,7 +95,6 @@ export default Vue.extend({
                 this.stopOthersLocationUpdates();
             }
         },
-
         mapTraces(mapTraces, prevMapTraces) {
             if (prevMapTraces.length === 0) {
                 this.initOthersMapTraces();
@@ -76,7 +102,7 @@ export default Vue.extend({
         },
         coordinates(coordinates, prevCoordinates) {
             this.setCenter(coordinates);
-            this.setSelfMarker(coordinates);
+            this.renderSelfMarker(coordinates);
         },
         // lastUpdatedMapTraceId(lastUpdatedMapTraceId) {
         //     this.updateOthersMapTrace(lastUpdatedMapTraceId);
@@ -94,6 +120,25 @@ export default Vue.extend({
             addMapTrace: "addMapTrace",
             setUsersIsTraceSelfModeOn: "setUsersIsTraceSelfModeOn",
         }),
+        renderMapSpotMarkers() {
+            this.mapSpots.forEach((mapSpot: MapSpot) => {
+                const coordinates = mapSpot.geoLoc.coordinates;
+                const position = new google.maps.LatLng(coordinates[1], coordinates[0]);
+
+                const mapSpotMarker = new google.maps.Marker({
+                    position: position,
+                    icon: mapSpotIcon,
+                    map: this.map,
+                });
+
+                this.mapSpotMarkers.push(mapSpotMarker)
+            })
+        },
+        removeMapSpotMarkers() {
+            this.mapSpotMarkers.forEach((mapSpotMarker: google.maps.Marker) => {
+                mapSpotMarker.setMap(null);
+            })
+        },
         initMap() {
             const targetElement = this.$refs["google-map"] as Element;
             const map = new google.maps.Map(targetElement, {
@@ -113,7 +158,10 @@ export default Vue.extend({
         initCurrentPosition() {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    const { longitude, latitude } = position.coords;
+                    const {
+                        longitude,
+                        latitude
+                    } = position.coords;
                     const currCoordinates = [longitude, latitude];
                     this.initSelfMarker(currCoordinates);
                     this.setCoordinates(currCoordinates);
@@ -141,12 +189,9 @@ export default Vue.extend({
                 maxWidth: 200,
             });
 
-
             this.selfMarker.addListener("click", () => {
-                if (this.selfInfoWindow) this.selfInfoWindow.close();
-                // @ts-ignore
-                this.selfInfoWindow?.open(this.map, this.selfMarker);
-                // this.selfInfoWindow = this.selfInfoWindow;
+                    // this.selfInfoWindow.close();
+                    this.selfInfoWindow.open(this.map, this.selfMarker);
             });
         },
         initOthersMapTraces() {
@@ -157,7 +202,9 @@ export default Vue.extend({
                     mapTrace.isActive &&
                     mapTrace.mapTraceId !== this.selfMapTraceId
                 ) {
-                    const { coordinates } = mapTrace.userTraces[
+                    const {
+                        coordinates
+                    } = mapTrace.userTraces[
                         mapTrace.userTraces.length - 1
                     ].geoLoc;
                     console.log(mapTrace);
@@ -196,8 +243,12 @@ export default Vue.extend({
                 this.watchPositionId = navigator.geolocation.watchPosition(
                     (position) => {
                         console.log(114, "watchPosition");
-                        const { longitude, latitude } = position.coords;
+                        const {
+                            longitude,
+                            latitude
+                        } = position.coords;
                         const currCoordinates = [longitude, latitude];
+                        alert(`203, geolocation, start self: ${currCoordinates}`);
                         this.setCoordinates(currCoordinates);
                         this.addMapTrace(currCoordinates);
                     },
@@ -209,7 +260,7 @@ export default Vue.extend({
                 this.addMapTrace(this.coordinates);
             }
         },
-        setSelfMarker(coordinates: number[]) {
+        renderSelfMarker(coordinates: number[]) {
             // @ts-ignore
             this.selfMarker.setPosition(
                 new google.maps.LatLng(coordinates[1], coordinates[0])

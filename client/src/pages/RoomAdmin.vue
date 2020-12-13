@@ -5,9 +5,9 @@
             <ListUser />
             <div class="room-map-wrapper">
                 <Map class="room-map"></Map>
-                <section class="list-map-spot-wrapper" v-if="isShowMapSpot">
+                <!-- <section class="list-map-spot-wrapper" v-if="isShowMapSpot">
                     <ListMapSpot />
-                </section>
+                </section> -->
                 <section class="list-menu-wrapper"><ListMenu /></section>
             </div>
             <div class="manual-control">
@@ -147,6 +147,7 @@ export default Vue.extend({
 
     .list-map-spot-wrapper {
         position: absolute;
+        opacity: 0.5;
         z-index: 3;
         left: 10%;
         top: 5%;

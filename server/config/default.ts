@@ -2,7 +2,7 @@
 
 // export default registerAs('app', () => ({
 export default () => ({
-    port: process.env.PORT || 3080,
+    port: process.env.PORT || "3080", //string port
     db: {
       type: 'mongodb',
       dbName: process.env.DB_NAME,
@@ -12,5 +12,5 @@ export default () => ({
     },
     nodeEnv: process.env.NODE_ENV,
     jwtSecret: process.env.JWT_SECRET,
-    typeOrmSync: process.env.TYPEORM_SYNC
+    typeOrmSync: process.env.TYPEORM_SYNC //boolean true
   });
