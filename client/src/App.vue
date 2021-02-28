@@ -26,7 +26,7 @@ import Login from "@/pages/Login.vue";
 const accountNameSapceMappers = createNamespacedHelpers("account");
 const mapGettersAccount = accountNameSapceMappers.mapGetters;
 const mapActionsAccount = accountNameSapceMappers.mapActions;
-
+//testing
 const roomNameSapceMappers = createNamespacedHelpers("room");
 const mapGettersRoom = roomNameSapceMappers.mapGetters;
 const mapActionsRoom = roomNameSapceMappers.mapActions;
